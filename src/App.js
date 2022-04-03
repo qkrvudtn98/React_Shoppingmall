@@ -5,6 +5,7 @@ import './App.css';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import { useState } from 'react';
 import Data from './data.js';
+import { Link, Route, Switch } from 'react-router-dom';
 
 function App() {
 
@@ -23,6 +24,33 @@ function App() {
         </Container>
       </Navbar>
       
+      <Route exact path="/">
+        <Jumbotron />
+        <Items />
+      </Route>
+
+      <Route path="/detail">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-6">
+              <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
+            </div>
+            <div className="col-md-6 mt-4">
+              <h4 className="pt-5">상품명</h4>
+              <p>상품설명</p>
+              <p>120000원</p>
+              <button className="btn btn-danger">주문하기</button> 
+            </div>
+          </div>
+        </div> 
+      </Route>
+
+      {/* <Route path="/" component={}></Route> */}
+    </div>
+  );
+
+  function Jumbotron () {
+    return (
       <div className='jumbotron'>
         <div className='shop-name'>
           <h1>20% Season Off</h1>
@@ -30,22 +58,8 @@ function App() {
           <Button variant="primary">Primary</Button>{' '}
         </div>
       </div>
-
-      <div className='container'>
-        <div className='row'>
-          
-          {/* <ShoesInfo shoes={shoes}/> */}
-
-          {
-            shoes.map((a,i) => {
-              return (<Card shoes={shoes[i]} index={i} key={i}/>)
-            })
-          }
-        </div>
-      </div>
-      
-    </div>
-  );
+    )
+  }
 
   function Card(props) {
     return (
@@ -55,6 +69,20 @@ function App() {
         <p>{ props.shoes.content } & { props.shoes.price }</p>
       </div>
     );
+  }
+
+  function Items() {
+    return (
+      <div className='container'>
+        <div className='row'>
+          {
+            shoes.map((a,i) => {
+              return (<Card shoes={shoes[i]} index={i} key={i}/>)
+            })
+          }
+        </div>
+      </div>
+    )
   }
 
   //  내가 만든 상품 데이터 바인딩 (반복문)

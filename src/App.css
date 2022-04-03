@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.jumbotron {
+  display: block;
+  height: 500px;
+  background: #eee;
+  background-image: url('./background.jpg');
+  background-size: cover;
+  color: #eee;
+}
+
+.shop-name {
+  padding : 150px 0;
+} 
+
+

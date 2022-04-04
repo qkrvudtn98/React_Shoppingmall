@@ -3,8 +3,9 @@
 import logo from './logo.svg';
 import './App.css';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Data from './data.js';
+import Detail from './detail.js';
 import { Link, Route, Switch } from 'react-router-dom';
 
 function App() {
@@ -17,37 +18,35 @@ function App() {
         <Container>
         <Navbar.Brand href="#home">FirstShop</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Nav.Link><Link to="/">Home</Link></Nav.Link>
+          <Nav.Link><Link to="/detail">Detail</Link></Nav.Link>
+          <Nav.Link><Link to="/price">Pricing</Link></Nav.Link>
         </Nav>
         </Container>
       </Navbar>
       
-      <Route exact path="/">
-        <Jumbotron />
-        <Items />
-      </Route>
+      <Switch>
 
-      <Route path="/detail">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
-            </div>
-            <div className="col-md-6 mt-4">
-              <h4 className="pt-5">상품명</h4>
-              <p>상품설명</p>
-              <p>120000원</p>
-              <button className="btn btn-danger">주문하기</button> 
-            </div>
-          </div>
-        </div> 
-      </Route>
+        <Route exact path="/">
+          <Jumbotron />
+          <Items />
+        </Route>
+
+        <Route path="/detail/:id">
+          <Detail shoes={shoes}/>
+        </Route>
+
+        <Route path="/:id">
+          <div>재현이는 오줌싸개!!</div>
+        </Route>
+      
+      </Switch>
 
       {/* <Route path="/" component={}></Route> */}
     </div>
   );
+
+  
 
   function Jumbotron () {
     return (

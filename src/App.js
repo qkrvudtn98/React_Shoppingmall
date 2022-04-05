@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import Data from './data.js';
 import Detail from './detail.js';
 import { Link, Route, Switch } from 'react-router-dom';
+import axios from 'axios';
 
 function App() {
 
@@ -18,9 +19,9 @@ function App() {
         <Container>
         <Navbar.Brand href="#home">FirstShop</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link><Link to="/">Home</Link></Nav.Link>
-          <Nav.Link><Link to="/detail">Detail</Link></Nav.Link>
-          <Nav.Link><Link to="/price">Pricing</Link></Nav.Link>
+          <Nav.Link as={Link} to="/">Home</Nav.Link>
+          <Nav.Link as={Link} to="/detail">Detail</Nav.Link>
+          <Nav.Link as={Link} to="/price">Pricing</Nav.Link>
         </Nav>
         </Container>
       </Navbar>
@@ -41,13 +42,12 @@ function App() {
         </Route>
       
       </Switch>
-
       {/* <Route path="/" component={}></Route> */}
     </div>
   );
-
   
-
+  
+  
   function Jumbotron () {
     return (
       <div className='jumbotron'>
@@ -80,6 +80,17 @@ function App() {
             })
           }
         </div>
+        <button className='btn btn-primary' onClick={()=>{
+          
+          axios.get('https://codingapple1.github.io/shop/data2.json')
+          .then((result)=>{ 
+            console.log(result);
+          })
+          .catch(()=> {
+            console.log('실패!');
+          });
+
+        }}>More</button>
       </div>
     )
   }

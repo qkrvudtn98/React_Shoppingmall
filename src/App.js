@@ -8,10 +8,14 @@ import Data from './data.js';
 import Detail from './detail.js';
 import { Link, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
+import './app.scss';
 
 function App() {
 
   let [shoes, shoesSet] = useState(Data);
+  let [count, countSet] = useState(2);
+  let [show, showSet] = useState(true);
+  let [loading, loadingSet] = useState(true);
 
   return (
     <div className="App">      
@@ -80,17 +84,56 @@ function App() {
             })
           }
         </div>
-        <button className='btn btn-primary' onClick={()=>{
-          
-          axios.get('https://codingapple1.github.io/shop/data2.json')
-          .then((result)=>{ 
-            console.log(result);
-          })
-          .catch(()=> {
-            console.log('실패!');
-          });
+        {
+          show == true
+          ? <More></More>
+          : null
+        }
+      </div>
+    )
+  }
 
-        }}>More</button>
+  function More() {
+    return (
+      <button className='btn btn-primary' onClick={()=>{
+        {
+          loading == true
+          ? <Loading></Loading>
+          : null
+        }
+
+        {
+          loading == false
+          ? <Alert1></Alert1>
+          : null
+        }
+        axios.get('https://codingapple1.github.io/shop/data' + count +'.json')
+        .then((result)=>{ 
+          shoesSet([...shoes, ...result.data])
+          countSet((count + 1));
+          showSet(true)
+          loadingSet(false);
+        })
+        .catch(()=> {
+          showSet(false)
+          loadingSet(false);
+        });
+      }}>More</button>
+    )
+  }
+
+  function Loading() {
+    return (
+      <div className='load-alert'>
+        <p>로딩중입니다...</p>
+      </div>
+    )
+  }
+
+  function Alert1() {
+    return (
+      <div className='load-fail'>
+        <p>데이터를 불러오는데 실패하였습니다... 다시 시도해주세요</p>
       </div>
     )
   }

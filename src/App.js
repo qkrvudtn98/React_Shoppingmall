@@ -8,7 +8,6 @@ import Data from './data.js';
 import Detail from './detail.js';
 import { Link, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
-import './app.scss';
 
 function App() {
 
@@ -16,6 +15,7 @@ function App() {
   let [count, countSet] = useState(2);
   let [show, showSet] = useState(true);
   let [loading, loadingSet] = useState(true);
+  let [extra, extraSet] = useState([10, 11, 12]);
 
   return (
     <div className="App">      
@@ -38,7 +38,7 @@ function App() {
         </Route>
 
         <Route path="/detail/:id">
-          <Detail shoes={shoes}/>
+          <Detail shoes={shoes} extra={extra} extraChange={extraSet} />
         </Route>
 
         <Route path="/:id">

@@ -60,14 +60,23 @@ function Detail(props) {
           <h4 className="pt-5">{findItem.title}</h4>
           <p>{findItem.content}</p>
           <p>{findItem.price}</p>
+
+          <Extra extra={props.extra} />
+
           <button className="btn btn-danger"onClick={() => {
             history.goBack();
           }}>뒤로가기</button> 
-          <button className="btn btn-danger">주문하기</button> 
+          <button className="btn btn-danger" onClick={()=>{ props.extraChange([9,11,12]) }}>주문하기</button> 
         </div>
       </div>
     </div> 
   );
 }
+
+  function Extra(props) {
+    return (
+      <p>재고 : {props.extra[0]}</p>
+    )
+  }
 
   export default Detail;

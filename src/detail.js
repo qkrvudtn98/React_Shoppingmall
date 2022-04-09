@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import './detail.scss';
+import {extraContext} from './App.js';
 
 let Box = styled.div`
   padding : 20px;
@@ -16,6 +17,7 @@ function Detail(props) {
 
   let [alert,alertChange] = useState(true);
   let [inputData, inputDataSet] = useState(''); 
+  let extra = useContext(extraContext);
 
   useEffect(()=>{
     let timer = setTimeout(()=>{alertChange(false)},2000);
@@ -71,12 +73,14 @@ function Detail(props) {
       </div>
     </div> 
   );
-}
 
-  function Extra(props) {
+  function Extra() {
     return (
-      <p>재고 : {props.extra[0]}</p>
+      <p>재고 : {extra}</p>
     )
   }
+}
+
+  
 
   export default Detail;

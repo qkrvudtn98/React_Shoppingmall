@@ -3,11 +3,13 @@
 import logo from './logo.svg';
 import './App.css';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Data from './data.js';
 import Detail from './detail.js';
 import { Link, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
+
+export let extraContext = React.createContext();
 
 function App() {
 
@@ -37,9 +39,13 @@ function App() {
           <Items />
         </Route>
 
-        <Route path="/detail/:id">
-          <Detail shoes={shoes} extra={extra} extraChange={extraSet} />
-        </Route>
+        <extraContext.Provider value={extra}>
+
+          <Route path="/detail/:id">
+            <Detail shoes={shoes} extra={extra} extraChange={extraSet} />
+          </Route>
+
+        </extraContext.Provider>
 
         <Route path="/:id">
           <div>재현이는 오줌싸개!!</div>
@@ -65,25 +71,38 @@ function App() {
   }
 
   function Card(props) {
+
+    let extraItem = useContext(extraContext);
+
     return (
       <div className="col-md-4">
         <img src={ "https://codingapple1.github.io/shop/shoes" + (props.index + 1) + ".jpg" } alt="" width="100%"/>
         <h4>{ props.shoes.title }</h4>
         <p>{ props.shoes.content } & { props.shoes.price }</p>
+        <Test></Test>
       </div>
     );
+  }
+
+  function Test() {
+    let extra = useContext(extraContext);
+    return <p>재고 : {extra[0]}</p>
   }
 
   function Items() {
     return (
       <div className='container'>
-        <div className='row'>
-          {
-            shoes.map((a,i) => {
-              return (<Card shoes={shoes[i]} index={i} key={i}/>)
-            })
-          }
-        </div>
+
+        <extraContext.Provider value={extra}>
+          <div className='row'>
+            {
+              shoes.map((a,i) => {
+                return (<Card shoes={shoes[i]} index={i} key={i}/>)
+              })
+            }
+          </div>
+        </extraContext.Provider>
+
         {
           show == true
           ? <More></More>

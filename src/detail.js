@@ -3,6 +3,9 @@ import { useHistory, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import './detail.scss';
 import {extraContext} from './App.js';
+import { Nav } from 'react-bootstrap';
+
+import { CSSTransition } from "react-transition-group";
 
 let Box = styled.div`
   padding : 20px;
@@ -16,7 +19,10 @@ let Title = styled.h4`
 function Detail(props) {
 
   let [alert,alertChange] = useState(true);
-  let [inputData, inputDataSet] = useState(''); 
+  let [inputData, inputDataSet] = useState('');
+  let [tab, tabSet] = useState(0); 
+
+  let [onOff, onOffSet] = useState(false);
   let extra = useContext(extraContext);
 
   useEffect(()=>{
@@ -71,16 +77,42 @@ function Detail(props) {
           <button className="btn btn-danger" onClick={()=>{ props.extraChange([9,11,12]) }}>주문하기</button> 
         </div>
       </div>
+
+      <Nav className="mt-5" variant="tabs" defaultActiveKey="link-0">
+        <Nav.Item>
+          <Nav.Link eventKey="link-0" onClick={() => {onOffSet(false), tabSet(0)}}>Active</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="link-1" onClick={() => {onOffSet(false), tabSet(1)}}>Option 2</Nav.Link>
+        </Nav.Item>
+      </Nav>
+
+      <CSSTransition in={onOff} classNames="wow" timeout={500}>
+        <TabContent tab={tab} onOff={onOff}></TabContent>
+      </CSSTransition>
     </div> 
   );
+
+  function TabContent(props) {
+
+    useEffect(() => {
+      props.onOffSet(true);
+    });
+
+    if (props.tab === 0) {
+      return <div>0번째 내용입니다</div>
+    } else if (props.tab === 1) {
+      return <div>1번째 내용입니다</div>
+    } else if (props.tab === 2) {
+      return <div>2번째 내용입니다</div>
+    }
+  }
 
   function Extra() {
     return (
       <p>재고 : {extra}</p>
     )
   }
+
 }
-
-  
-
   export default Detail;

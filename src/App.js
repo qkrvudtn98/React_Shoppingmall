@@ -1,11 +1,10 @@
 /*eslint-disable */
-
-import logo from './logo.svg';
 import './App.css';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
 import React, { useState, useContext } from 'react';
 import Data from './data.js';
 import Detail from './detail.js';
+import Cart from './Cart.js';
 import { Link, Route, Switch } from 'react-router-dom';
 import axios from 'axios';
 
@@ -38,18 +37,26 @@ function App() {
           <Jumbotron />
           <Items />
         </Route>
+        
+        <Route path="/detail/:id">
+          <extraContext.Provider value={extra}>
 
-        <extraContext.Provider value={extra}>
+            <Route path="/detail/:id">
+              <Detail shoes={shoes} extra={extra} extraChange={extraSet} />
+            </Route>
 
-          <Route path="/detail/:id">
-            <Detail shoes={shoes} extra={extra} extraChange={extraSet} />
-          </Route>
-
-        </extraContext.Provider>
+          </extraContext.Provider>
+        </Route>
+        
+        <Route path="/cart">
+          <Cart></Cart>
+        </Route>
 
         <Route path="/:id">
-          <div>재현이는 오줌싸개!!</div>
+          <div>아무거나 적었을 때 보여주기</div>
         </Route>
+        
+        
       
       </Switch>
       {/* <Route path="/" component={}></Route> */}

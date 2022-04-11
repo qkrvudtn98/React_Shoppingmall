@@ -1,10 +1,10 @@
+/*eslint-disable */
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import styled from 'styled-components';
 import './detail.scss';
 import {extraContext} from './App.js';
 import { Nav } from 'react-bootstrap';
-
 import { CSSTransition } from "react-transition-group";
 
 let Box = styled.div`
